@@ -29,13 +29,15 @@ public class ObjectOperations
 	{
 		RiakCSClient csClient= null;
 
-		String bucketName    = "playground-12345";
-		String objectKey     = "testfile";
+		String bucketName    = "test-bucket";
+		String objectKey     = "test_file";
 		String outputFilename= null;
 
 		if (runAgainstRiakCS)
 		{
-			CSCredentials csCredentials= new CSCredentials(CSCredentials.class.getResourceAsStream("CSCredentials.Riak.properties"));			
+			InputStream is = new FileInputStream("src/main/resources/CSCredentials.Riak.properties");
+//			CSCredentials csCredentials= new CSCredentials(CSCredentials.class.getResourceAsStream("CSCredentials.Riak.properties"));
+			CSCredentials csCredentials= new CSCredentials(is);
 			csClient= new RiakCSClient(csCredentials.getCSAccessKey(), csCredentials.getsCSSecretKey(), csCredentials.getCSEndPoint(), csCredentials.getUseHttps());
 
 			outputFilename= "/tmp/riakout.txt";
@@ -58,20 +60,20 @@ public class ObjectOperations
 		JsonObject result= null;
 
 		// create bucket
-		csClient.createBucket(bucketName);
+//		csClient.createBucket(bucketName);
 
 		// upload object
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Content-Type", "text/html");
+//		Map<String, String> headers = new HashMap<String, String>();
+//		headers.put("Content-Type", "text/html");
+//
+//		Map<String, String> metadata = new HashMap<String, String>();
+//		metadata.put("Title","see spot run");
+//		metadata.put("Type","text/html");
+//
+//		String webpage= "<html><body>This is a <b>Web Page</b></body></html>";
+//		InputStream dataInputStream= new ByteArrayInputStream(webpage.getBytes("UTF-8"));
 
-		Map<String, String> metadata = new HashMap<String, String>();
-		metadata.put("Title","see spot run");
-		metadata.put("Type","text/html");
-		
-		String webpage= "<html><body>This is a <b>Web Page</b></body></html>";
-		InputStream dataInputStream= new ByteArrayInputStream(webpage.getBytes("UTF-8"));
-
-		csClient.createObject(bucketName, objectKey, dataInputStream, headers, metadata);
+//		csClient.createObject(bucketName, objectKey, dataInputStream, headers, metadata);
 
 
 		// get object info

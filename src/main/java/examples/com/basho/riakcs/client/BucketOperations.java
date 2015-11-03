@@ -19,17 +19,22 @@ package examples.com.basho.riakcs.client;
 import com.basho.riakcs.client.api.*;
 import com.google.gson.JsonObject;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 public class BucketOperations
 {
 	public static void runIt(boolean runAgainstRiakCS, boolean enableDebugOutput) throws Exception
 	{
 		RiakCSClient csClient= null;
 
-		String bucketName= "playground-123";
+		String bucketName= "test-bucket";
 
 		if (runAgainstRiakCS)
 		{
-			CSCredentials csCredentials= new CSCredentials(CSCredentials.class.getResourceAsStream("CSCredentials.Riak.properties"));			
+			InputStream is = new FileInputStream("src/main/resources/CSCredentials.Riak.properties");
+//			CSCredentials csCredentials= new CSCredentials(CSCredentials.class.getResourceAsStream("CSCredentials.Riak.properties"));
+			CSCredentials csCredentials= new CSCredentials(is);
 			csClient= new RiakCSClient(csCredentials.getCSAccessKey(), csCredentials.getsCSSecretKey(), csCredentials.getCSEndPoint(), csCredentials.getUseHttps());
 
 		} else {
@@ -52,19 +57,19 @@ public class BucketOperations
 		System.out.println(result);
 
 		// create bucket
-		csClient.createBucket(bucketName);
+//		csClient.createBucket(bucketName);
 
 		// bucket accessible
-		if (csClient.isBucketAccessible(bucketName) == false)
-			throw new RiakCSException("Bucket is not accessible: " + bucketName);
+//		if (csClient.isBucketAccessible(bucketName) == false)
+//			throw new RiakCSException("Bucket is not accessible: " + bucketName);
 
 		// list buckets
-		result= csClient.listBuckets();
-		System.out.println(result);
+//		result= csClient.listBuckets();
+//		System.out.println(result);
 
 		// get ACL
-		result= csClient.getACLForBucket(bucketName);
-		System.out.println(result);
+//		result= csClient.getACLForBucket(bucketName);
+//		System.out.println(result);
 
 //		if (csClient.endpointIsS3() == false) // just run it against RiakCS
 //		{
@@ -77,18 +82,18 @@ public class BucketOperations
 //		}
 
 		// set "canned" ACL
-		csClient.setCannedACLForBucket(bucketName, RiakCSClient.PERM_AUTHENTICATED_READ);
-
-		// get ACL
-		result= csClient.getACLForBucket(bucketName);
-		System.out.println(result);
-
-		// delete bucket
-		csClient.deleteBucket(bucketName);
-		
-		// list buckets
-		result= csClient.listBuckets();
-		System.out.println(result);
+//		csClient.setCannedACLForBucket(bucketName, RiakCSClient.PERM_AUTHENTICATED_READ);
+//
+//		// get ACL
+//		result= csClient.getACLForBucket(bucketName);
+//		System.out.println(result);
+//
+//		// delete bucket
+//		csClient.deleteBucket(bucketName);
+//
+//		// list buckets
+//		result= csClient.listBuckets();
+//		System.out.println(result);
 
 	}
 
